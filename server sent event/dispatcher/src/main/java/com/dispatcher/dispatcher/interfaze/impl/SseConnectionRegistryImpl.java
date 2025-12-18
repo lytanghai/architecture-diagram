@@ -114,6 +114,9 @@ public class SseConnectionRegistryImpl implements SseConnectionRegistry {
     public void remove(String userId, String topic, String connectionId) {
         sseRegistry.remove(userId, topic, connectionId);
     }
+    public String buildObject(String userid, String topic) {
+        return "sse:user:" + userid + ":topic:" + topic;
+    }
 
     @Override
     public Collection<SseEmitter> getAll() {
@@ -121,8 +124,6 @@ public class SseConnectionRegistryImpl implements SseConnectionRegistry {
     }
 
     @Override
-    public void refreshTtl(String connectionId, long ttlMillis) {
-
-    }
+    public void refreshTtl(String connectionId, long ttlMillis) {}
 
 }

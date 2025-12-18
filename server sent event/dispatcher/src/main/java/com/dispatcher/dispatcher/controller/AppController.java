@@ -26,7 +26,6 @@ public class AppController {
     @Autowired
     private DispatcherService dispatcherService;
 
-
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) throws IOException {
         sseConnectionRegistry.register(registerRequest);
@@ -34,12 +33,10 @@ public class AppController {
         return ResponseEntity.ok("registered");
     }
 
-
     @GetMapping("/view-registry")
     public ResponseEntity<Map<String, Object>> view() {
         return ResponseEntity.ok(sseRegistry.getAllAsJson());
     }
-
 
     @PostMapping("/dispatch")
     public ResponseEntity<?> dispatch(@RequestBody DispatcherRequest req) {
@@ -48,7 +45,10 @@ public class AppController {
 
     @GetMapping("/close/{userId}/{topicId}/{connectionId}")
     public ResponseEntity<String> close(@PathVariable String userId, @PathVariable String topicId, @PathVariable String connectionId) {
+        System.out.println("closing connection info:  " + userId + " | " + topicId+ " | " + connectionId);
         sseConnectionRegistry.remove(userId, topicId, connectionId);
+        sseRegistry.remove(userId, topicId, connectionId);
         return ResponseEntity.ok("closed");
     }
+
 }
