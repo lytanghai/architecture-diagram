@@ -1,0 +1,30 @@
+1. view connections in registry
+curl --request GET \
+  --url http://localhost:8080/dispatcher/view-registry
+-------------------------------------------------------------------------
+2. register new connection [api / web browser]
+curl --request GET \
+  --url http://localhost:8081/emitter/sse/jib-mission/999 \
+  --header 'Content-Type: text/event-stream'
+-------------------------------------------------------------------------
+3. dispatch to client
+curl --request POST \
+  --url http://localhost:8080/dispatcher/dispatch \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"topic": "jib-mission-campaign",
+	"user_id": "111",
+	"event": "JIB-MISSION",
+	"event_id": "jib-mission-campaign",
+	"ttl": 36000,
+	"persistent": true,
+	"payload": {
+		"user_name": "tanghai2",
+		"txn_date": "2025-12-12"
+	}
+}'
+-------------------------------------------------------------------------
+4. close connection [manual - exist in client]
+curl --request GET \
+  --url http://localhost:8080/dispatcher/close/{userIdStr}/{topicName}/{connectionId} \
+  --header 'Content-Type: application/json'

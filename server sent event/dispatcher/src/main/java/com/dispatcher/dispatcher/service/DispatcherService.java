@@ -14,8 +14,6 @@ import java.util.Map;
 @Service
 public class DispatcherService {
 
-    private static final long MAX_EVENT_TTL = 86400; // example
-    private static final String PERSIST_EVENT_URL = "http://event-tracker/persist";
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
